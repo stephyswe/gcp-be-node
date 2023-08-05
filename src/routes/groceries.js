@@ -13,7 +13,7 @@ const groceryList = [
   },
   {
     item: "pop-tarts",
-    quantity: 1,
+    quantity: process.env.REACT_APP_TEST_VALUE || 0,
   },
 ];
 

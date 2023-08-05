@@ -1,5 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'us-west2-docker.pkg.dev/devt-394612/node-docker-gcr-example-docker-repo/node-docker-gcr-image:tag1', '--build-arg', 'REACT_APP_TEST_VALUE=$_REACT_APP_TEST_VALUE', '.' ]
+    args: [ 'build', '-t', 'us-west2-docker.pkg.dev/devt-394612/node-docker-gcr-example-docker-repo/node-docker-gcr-image:tag1', '.' ]
 images:
   - 'us-west2-docker.pkg.dev/devt-394612/node-docker-gcr-example-docker-repo/node-docker-gcr-image:tag1'
