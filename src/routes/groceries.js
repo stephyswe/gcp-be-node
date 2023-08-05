@@ -18,6 +18,9 @@ const groceryList = [
 ];
 
 router.get("/", (request, response) => {
+  response.cookie("visited", true, {
+    maxAge: 60000,
+  });
   response.send(groceryList);
 });
 
