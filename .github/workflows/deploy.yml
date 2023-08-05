@@ -1,0 +1,33 @@
+name: GCloud Build and Deploy
+
+on:
+  push:
+    branches:
+      - main # Adjust this branch name to match your main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }} # Replace with your actual Google Cloud project ID
+          service_account_key: ${{ secrets.GCP_SA_KEY }} # Make sure you set up this secret
+
+      - name: Build and submit the image
+        run: |
+          gcloud builds submit --config cloudbuild.yaml --substitutions _REACT_APP_TEST_VALUE=TestVar
+
+      - name: Deploy to Cloud Run
+        run: >
+          gcloud run deploy node-docker-gcr-image
+          --image=us-west2-docker.pkg.dev/devt-394612/node-docker-gcr-example-docker-repo/node-docker-gcr-image:tag1
+          --platform managed
+          --region=us-west2
+          --allow-unauthenticated
+          --port 5000
