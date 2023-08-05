@@ -2,9 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const passport = require('passport');
+const MongoStore = require("connect-mongo");
+const passport = require("passport");
 
-require('./strategies/local');
+require("./strategies/local");
 // Routes
 const groceriesRoute = require("./routes/groceries");
 const marketsRoute = require("./routes/markets");
@@ -24,6 +25,9 @@ app.use(
     secret: "APODAJDSDASMCZXMZADASDASDPASDOASDSAK",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.DATABASE_URL,
+    }),
   })
 );
 
