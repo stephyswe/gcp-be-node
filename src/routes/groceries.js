@@ -17,10 +17,12 @@ const groceryList = [
   },
 ];
 
+router.use((req, res, next) => {
+  if (req.session.user) next();
+  else res.send(401);
+});
+
 router.get("/", (request, response) => {
-  response.cookie("visited", true, {
-    maxAge: 60000,
-  });
   response.send(groceryList);
 });
 
@@ -36,17 +38,17 @@ router.post("/", (request, response) => {
   response.send(201);
 });
 
-router.get('/shopping/cart', (request, response) => {
+router.get("/shopping/cart", (request, response) => {
   const { cart } = request.session;
-  console.log('Cart');
+  console.log("Cart");
   if (!cart) {
-    response.send('You have no cart session');
+    response.send("You have no cart session");
   } else {
     response.send(cart);
   }
 });
 
-router.post('/shopping/cart/item', (request, response) => {
+router.post("/shopping/cart/item", (request, response) => {
   const { item, quantity } = request.body;
   const cartItem = { item, quantity };
   const { cart } = request.session;
