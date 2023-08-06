@@ -17,3 +17,19 @@ Showcases the use of Express JS, a Node JS framework, to create a simple web app
 9. Sessions & Cart System
 10. Fake Authentication Flow Session
 11. Mongoose & Create User
+12. Hashing Passwords
+13. Basic Auth
+14. Installing Passport & Passport Local
+15. Implementing Passport Verify Function
+16. Serialize & Deserialize User Methods
+17. Session Store with connect-mongo
+18. OAuth2 using Discord
+- https://discord.com/developers/applications
+- create application - Oauth2 - create
+- oauth2 tab
+- copy client id and client secret
+- add redirect uri
+- http://localhost:4000/api/v1/auth/discord/redirect
+
+- open http://localhost:4000/api/v1/auth/discord (discord authorize)
+- 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Discord OAuth2 Example</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="Discord OAuth2 Example" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div>
+      <button id="login">Login</button>
+      <button id="logout">Logout</button>
+      <button id="groceries">Groceries GET</button>
+      <h1 id="env">Environment: Loading...</h1>
+    </div>
+    <script>
+      const actions = {
+        login: () =>
+          (window.location.href =
+            window.location.origin + "/api/v1/auth/discord"),
+        logout: () =>
+          fetchApi("/api/v1/auth/logout", {
+            method: "GET",
+            credentials: "include",
+          })
+            .then(() => console.log("Logged out"))
+            .catch(() => console.log("Logout failed")),
+        groceries: () =>
+          fetchApi("/api/v1/groceries", {
+            method: "GET",
+            credentials: "include",
+          }).then((data) => console.log(data)),
+      };
+
+      const fetchApi = async (endpoint, options = {}) => {
+        const response = await fetch(
+          window.location.origin + endpoint,
+          options
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      };
+
+      Object.keys(actions).forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener("click", actions[id]);
+        }
+      });
+
+      fetchApi("/api/v1/auth/env").then(
+        (data) =>
+          (document.getElementById("env").textContent =
+            "Environment: " + data.env)
+      );
+    </script>
+  </body>
+</html>

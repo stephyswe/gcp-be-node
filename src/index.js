@@ -1,11 +1,15 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
 
+//require("./strategies/one");
+require("./strategies/discord");
 require("./strategies/local");
+
 // Routes
 const groceriesRoute = require("./routes/groceries");
 const marketsRoute = require("./routes/markets");
@@ -16,6 +20,19 @@ require("./database");
 const app = express();
 const PORT = 5000;
 
+app.use(express.static("public"));
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:4000",
+      "https://node-docker-gcr-image-axvwqtiyiq-wl.a.run.app",
+      "null",
+    ],
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
