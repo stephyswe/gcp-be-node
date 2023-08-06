@@ -7,7 +7,8 @@ const MongoStore = require("connect-mongo");
 const passport = require("passport");
 
 //require("./strategies/one");
-require("./strategies/discord");
+const { setupDiscordPassportStrategy } = require("./strategies/discord");
+setupDiscordPassportStrategy();
 require("./strategies/local");
 
 // Routes
