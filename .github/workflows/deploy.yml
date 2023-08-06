@@ -12,6 +12,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          submodules: false
+          fetch-depth: 1
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm test
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.3.0
@@ -21,7 +35,7 @@ jobs:
 
       - name: Build and submit the image
         run: |
-          gcloud builds submit --config cloudbuild.yaml
+          gcloud builds submit --config cloudbuild.yaml > /dev/null
 
       - name: Deploy to Cloud Run
         run: >
